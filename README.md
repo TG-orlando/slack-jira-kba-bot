@@ -22,12 +22,23 @@ An intelligent Slack bot that automatically generates Knowledge Base Articles (K
 
 ## Prerequisites
 
-- Node.js 18+ and npm
+- Node.js 18+ and npm (for local development)
 - Slack workspace with admin access
 - Atlassian account with Jira and Confluence access
 - OpenAI API key with GPT-4 and DALL-E access
 
-## Setup Instructions
+## Quick Start - Deploy to Railway (Recommended)
+
+The easiest way to get started is deploying to Railway:
+
+1. **Get API Credentials** - Follow [SETUP_GUIDE.md](SETUP_GUIDE.md) to get all tokens
+2. **Deploy to Railway** - Follow [RAILWAY_DEPLOYMENT.md](RAILWAY_DEPLOYMENT.md)
+3. **Configure Environment Variables** in Railway dashboard
+4. **Test in Slack!**
+
+Railway handles hosting, auto-deployment, and keeps your bot running 24/7.
+
+## Setup Instructions (Local Development)
 
 ### 1. Clone and Install Dependencies
 
