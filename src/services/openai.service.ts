@@ -139,7 +139,7 @@ Return ONLY valid JSON in this exact format:
       if (step.imagePrompt && step.osType) {
         try {
           // Generate for the specified OS
-          const osTypes = step.osType === 'both' ? ['mac', 'windows'] : [step.osType];
+          const osTypes: ('mac' | 'windows')[] = step.osType === 'both' ? ['mac', 'windows'] : [step.osType];
 
           for (const os of osTypes) {
             const enhancedPrompt = this.enhanceImagePrompt(step.imagePrompt, os);
@@ -153,11 +153,11 @@ Return ONLY valid JSON in this exact format:
               style: 'natural'
             });
 
-            if (response.data[0].url) {
+            if (response.data && response.data[0] && response.data[0].url) {
               images.push({
                 stepNumber: step.stepNumber,
                 url: response.data[0].url,
-                osType: os as 'mac' | 'windows',
+                osType: os,
                 prompt: enhancedPrompt
               });
             }

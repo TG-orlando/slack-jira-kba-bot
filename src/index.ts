@@ -53,11 +53,11 @@ const kbaWorkflow = new KBAGeneratorWorkflow(
 // Listen for messages containing Jira URLs
 app.message(async ({ message, say }) => {
   // Only process regular messages with text
-  if (message.subtype || !('text' in message)) {
+  if (message.subtype || !('text' in message) || !message.text) {
     return;
   }
 
-  const text = message.text;
+  const text: string = message.text;
   const channel = message.channel;
   const threadTs = message.thread_ts || message.ts;
   const userId = message.user;
@@ -104,11 +104,11 @@ app.action('approve_kba', async ({ ack, body, client }) => {
   }
 
   const action = body.actions[0];
-  if (action.type !== 'button') {
+  if (action.type !== 'button' || !action.value) {
     return;
   }
 
-  const contextKey = action.value;
+  const contextKey: string = action.value;
   const userId = body.user.id;
 
   // Update the message to show approval in progress
@@ -138,11 +138,11 @@ app.action('request_changes', async ({ ack, body, client }) => {
   }
 
   const action = body.actions[0];
-  if (action.type !== 'button') {
+  if (action.type !== 'button' || !action.value) {
     return;
   }
 
-  const contextKey = action.value;
+  const contextKey: string = action.value;
 
   // Update the message
   await client.chat.update({
@@ -171,11 +171,11 @@ app.action('cancel_kba', async ({ ack, body, client }) => {
   }
 
   const action = body.actions[0];
-  if (action.type !== 'button') {
+  if (action.type !== 'button' || !action.value) {
     return;
   }
 
-  const contextKey = action.value;
+  const contextKey: string = action.value;
 
   // Update the message
   await client.chat.update({
@@ -198,7 +198,11 @@ app.action('cancel_kba', async ({ ack, body, client }) => {
 
 // Handle app mentions
 app.event('app_mention', async ({ event, say }) => {
-  const text = event.text;
+  if (!event.text) {
+    return;
+  }
+
+  const text: string = event.text;
   const channel = event.channel;
   const threadTs = event.thread_ts || event.ts;
   const userId = event.user;
