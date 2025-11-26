@@ -198,14 +198,14 @@ app.action('cancel_kba', async ({ ack, body, client }) => {
 
 // Handle app mentions
 app.event('app_mention', async ({ event, say }) => {
-  if (!event.text) {
+  if (!event.text || !event.user) {
     return;
   }
 
   const text: string = event.text;
   const channel = event.channel;
   const threadTs = event.thread_ts || event.ts;
-  const userId = event.user;
+  const userId: string = event.user;
 
   // Check if message contains a Jira URL or ticket key
   const ticketKey = jiraService.extractTicketKey(text);
